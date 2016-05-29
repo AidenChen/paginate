@@ -1,0 +1,97 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+table thead {
+    background: #F5F6FA;
+}
+
+table tr {
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+}
+
+table tbody tr {
+    cursor: pointer;
+}
+
+table th {
+    text-align: center;
+    font-weight: normal;
+    height: 38px;
+}
+
+table td {
+    word-wrap: break-word;
+    text-align: center;
+}
+
+#content_box {
+    margin: 20px auto;
+    width: 1190px;
+    height: 100%;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#content_box #wrapContent {
+    margin: 9px;
+    margin-left: 0;
+    height: 36px;
+}
+
+#content_box #wrapContent #infoContent {
+    color: #aaa;
+    height: 36px;
+    float: right;
+    line-height: 36px;
+    margin-right: 9px;
+}
+
+#content_box #wrapContent #areaContent {
+    float: right;
+}
+
+#content_box #tableUser th:nth-child(1) {
+    width: 3%;
+}
+
+#content_box #tableUser th:nth-child(2) {
+    width:4%;
+}
+
+#content_box #tableUser th:nth-child(3) {
+    width:10%;
+}
+
+#content_box #tableUser th:nth-child(4) {
+    width:9%;
+}
+
+#content_box #tableUser th:nth-child(5) {
+    width:25%;
+}
+
+#content_box #tableUser th:nth-child(6) {
+    width:10%;
+}
+
+#content_box #tableUser th:nth-child(7) {
+    width:10%;
+}
+
+#content_box #tableUser th:nth-child(8) {
+    width:10%;
+}
+
+#content_box #tableUser th:nth-child(9) {
+    width:5%;
+}
+
+#content_box #tableUser th:nth-child(10) {
+    width:14%;
+}

@@ -1,2 +1,2 @@
 # paginate
-A simple pagination plugin in primary JavaScript.
+A simple paginator in primary JavaScript.

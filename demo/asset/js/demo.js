@@ -1,6 +1,7 @@
 (function() {
 
     var con = new Paginate(4, 3, 'areaContent', getQuery);
+    var conBox = document.getElementById("content_box");
 
     function getQuery(start, limit) {
         var formData = new FormData();
@@ -20,7 +21,7 @@
                 if (data.num < limit) {
                     tdLength = data.num;
                 }
-                document.getElementById("infoContent").innerHTML = '共有 ' + data.num + ' 条，每页显示 ' + con.pageLmt + ' 条';
+                conBox.getElementById("infoContent").innerHTML = '共有 ' + data.num + ' 条，每页显示 ' + con.pageLmt + ' 条';
                 for (var i = 0; i <= tdLength - 1; i++) {
                     if (data.items[i]) {
                         tds += "<tr>"
@@ -37,10 +38,10 @@
                             + "</tr>";
                     }
                 }
-                document.getElementById("tds").innerHTML = tds;
+                conBox.getElementById("tds").innerHTML = tds;
 
                 var pageTot = Math.ceil(data.num/con.pageLmt);
-                document.getElementById(con.pageTgt).innerHTML = con.doPaginate(pageTot);
+                conBox.getElementById(con.pageTgt).innerHTML = con.doPaginate(pageTot);
             }
         };
         xhr.send(formData);

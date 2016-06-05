@@ -80,8 +80,12 @@ Paginate.prototype = {
         return this.outstr;
     },
     getPage: function() {
-        var url = location.href.split("#");
-        var pageNow = url[1].split("=")[1];
+        var url = location.href;
+        if (url.indexOf("#") == -1) {
+            window.location.replace(url + '#page=1');
+        }
+        var str = location.href.split("#");
+        var pageNow = str[1].split("=")[1];
         return pageNow;
     },
     getData: function(now, lmt, funcName) {

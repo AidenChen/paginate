@@ -1,5 +1,5 @@
 # paginate
-A simple paginator in primary JavaScript.
+A simple paginator in native JavaScript.
 
 # How to use
 It's a JavaScript class, you can instantiate it directly like this:

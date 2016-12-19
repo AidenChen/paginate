@@ -7,7 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="./asset/css/demo.css">
-    <link rel="stylesheet" href="../paginate/paginate.css">
+    <link rel="stylesheet" href="../src/paginate.css">
 </head>
 <body>
 <div id="content_box">
@@ -30,11 +30,14 @@
         </tbody>
     </table>
     <div id="wrapContent">
-        <div id="areaContent"></div>
-        <div id="infoContent"></div>
+        <div class="pag">
+            <div class="paginate" id="areaContent"></div>
+            <div class="paginateGoTo" id="goToContent"></div>
+            <div class="clear"></div>
+        </div>
     </div>
 </div>
-<script src="../paginate/paginate.js"></script>
+<script src="../src/paginate.js"></script>
 <script src="./asset/js/demo.js"></script>
 </body>
 </html>

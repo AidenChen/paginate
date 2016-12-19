@@ -1,7 +1,16 @@
 (function() {
 
-    var con = new Paginate(4, 3, 'areaContent', getQuery);
-    var conBox = document.getElementById("content_box");
+    var con = new Paginate(4, 5, 'areaContent', getQuery);
+    document.getElementById('goToContent').innerHTML = con.createGoTo();
+    var curr = 1;
+
+    con.getData(parseInt(curr), con.pageSize, con.callback);
+    document.getElementById(con.container).addEventListener("click", function(e) {
+        if(e.target && e.target.nodeName == "A") {
+            curr = e.target.attributes.data.value;
+            con.getData(parseInt(curr), con.pageSize, con.callback);
+        }
+    });
 
     function getQuery(start, limit) {
         var formData = new FormData();
@@ -21,7 +30,6 @@
                 if (data.num < limit) {
                     tdLength = data.num;
                 }
-                conBox.getElementById("infoContent").innerHTML = '共有 ' + data.num + ' 条，每页显示 ' + con.pageLmt + ' 条';
                 for (var i = 0; i <= tdLength - 1; i++) {
                     if (data.items[i]) {
                         tds += "<tr>"
@@ -38,10 +46,9 @@
                             + "</tr>";
                     }
                 }
-                conBox.getElementById("tds").innerHTML = tds;
+                document.getElementById("tds").innerHTML = tds;
 
-                var pageTot = Math.ceil(data.num/con.pageLmt);
-                conBox.getElementById(con.pageTgt).innerHTML = con.doPaginate(pageTot);
+                document.getElementById(con.container).innerHTML = con.getList(curr, data.num);
             }
         };
         xhr.send(formData);

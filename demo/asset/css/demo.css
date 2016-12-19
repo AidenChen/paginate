@@ -28,6 +28,10 @@ table td {
     text-align: center;
 }
 
+.clear {
+    clear:both;
+}
+
 #content_box {
     margin: 20px auto;
     width: 1190px;
@@ -38,22 +42,25 @@ table td {
     position: relative;
 }
 
+#content_box .pag {
+    /*min-width:302px;*/
+    /*max-width:408px;*/
+    /*margin:0 auto;*/
+    position:absolute;
+    left:50%;
+}
+
 #content_box #wrapContent {
-    margin: 9px;
-    margin-left: 0;
+    margin: 10px 0;
     height: 36px;
 }
 
-#content_box #wrapContent #infoContent {
-    color: #aaa;
-    height: 36px;
-    float: right;
-    line-height: 36px;
-    margin-right: 9px;
+#content_box #wrapContent #goToContent {
+    float: left;
 }
 
 #content_box #wrapContent #areaContent {
-    float: right;
+    float: left;
 }
 
 #content_box #tableUser th:nth-child(1) {

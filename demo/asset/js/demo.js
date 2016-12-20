@@ -1,22 +1,19 @@
 (function() {
 
-    var con = new Paginate(4, 5, 'areaContent', getQuery);
-    document.getElementById('goToContent').innerHTML = con.createGoTo();
-    var curr = 1;
-
-    con.getData(parseInt(curr), con.pageSize, con.callback);
-    document.getElementById(con.container).addEventListener("click", function(e) {
-        if(e.target && e.target.nodeName == "A") {
-            curr = e.target.attributes.data.value;
-            con.getData(parseInt(curr), con.pageSize, con.callback);
-        }
+    var con = new Paginate({
+        pageIndex: 1,
+        pageSize: 4,
+        pagerLength: 5,
+        container: 'areaContent',
+        goToContainer: 'goToContent',
+        callback: query
     });
 
-    function getQuery(start, limit) {
+    function query(index, size) {
         var formData = new FormData();
 
-        formData.append('start', start);
-        formData.append('limit', limit);
+        formData.append('start', index);
+        formData.append('limit', size);
         formData.append('cmd', 'query');
 
         var xhr = new XMLHttpRequest();
@@ -26,8 +23,8 @@
             if (this.status == 200 || this.status == 304) {
                 var data = eval('('+this.responseText+')');
                 var tds = "";
-                var tdLength = limit;
-                if (data.num < limit) {
+                var tdLength = size;
+                if (data.num < size) {
                     tdLength = data.num;
                 }
                 for (var i = 0; i <= tdLength - 1; i++) {
@@ -47,8 +44,7 @@
                     }
                 }
                 document.getElementById("tds").innerHTML = tds;
-
-                document.getElementById(con.container).innerHTML = con.getList(curr, data.num);
+                con.setTotal(data.num);
             }
         };
         xhr.send(formData);

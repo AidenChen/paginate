@@ -1,18 +1,34 @@
-function Paginate(pageSize, pagerLength, container, callback) {
-    this.pageIndex = 1;
+function Paginate(config) {
+    this.pageIndex = config.pageIndex || 1;
     this.pageTotal = 0;
-    this.pageSize = pageSize;
+    this.pageSize = config.pageSize || 10;
     this.itemTotal = 0;
-    this.pagerLength = pagerLength;
-    this.container = container;
+    this.pagerLength = config.pagerLength || 5;
+    this.container = config.container;
+    this.goToContainer = config.goToContainer;
+    this.callback = config.callback;
     this.list = [];
-    this.callback = callback;
+    this.getData = function(now, lmt, callback) {
+        this.pageIndex = parseInt(now);
+        callback((parseInt(now) - 1) * lmt, lmt);
+    };
+
+    if (this.goToContainer) {
+        this.createGoTo(this.goToContainer);
+    }
+    this.getData(this.pageIndex, this.pageSize, this.callback);
+    var me = this;
+    document.getElementById(config.container).addEventListener("click", function(e) {
+        if (e.target && e.target.nodeName == "A") {
+            me.pageIndex = e.target.attributes.data && e.target.attributes.data.value;
+            me.getData(me.pageIndex, me.pageSize, me.callback);
+        }
+    });
 }
 
 Paginate.prototype = {
     constructor: Paginate,
-    getList: function(index, total) {
-        this.pageIndex = parseInt(index);
+    getList: function(total) {
         this.itemTotal = parseInt(total);
         this.pageTotal = Math.ceil(this.itemTotal / this.pageSize);
         this.list = [];
@@ -62,6 +78,9 @@ Paginate.prototype = {
         }
         return this.createPager(this.list);
     },
+    setTotal: function(total) {
+        document.getElementById(this.container).innerHTML = this.getList(total);
+    },
     createPager: function(list) {
         var ret = '';
         for (var i = 0; i < list.length; i++) {
@@ -72,7 +91,7 @@ Paginate.prototype = {
                 ret += '<a href="#" class="btnNex btn" data="' + (this.pageIndex + 1) + '">></a>';
             }
             else if (list[i] == '...') {
-                ret += '<a href="#" class="btnNex btn">...</a>';
+                ret += '<a href="#">...</a>';
             }
             else if (list[i] == this.pageIndex) {
                 ret += '<span class="current">' + this.pageIndex + '</span>';
@@ -83,13 +102,10 @@ Paginate.prototype = {
         }
         return ret;
     },
-    getData: function(now, lmt, callback) {
-        callback((parseInt(now) - 1) * lmt, lmt);
-    },
     createGoTo: function() {
-        var res = "";
-        res += "<input class='inputGoTo' type='text'>";
-        res += "<div class='btnGoTo'>Go</div>";
-        return res;
+        var ret = "";
+        ret += "<input class='inputGoTo' type='text'>";
+        ret += "<div class='btnGoTo'>Go</div>";
+        document.getElementById(this.goToContainer).innerHTML = ret;
     }
 };

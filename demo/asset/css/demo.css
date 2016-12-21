@@ -43,11 +43,8 @@ table td {
 }
 
 #content_box .pag {
-    /*min-width:302px;*/
-    /*max-width:408px;*/
-    /*margin:0 auto;*/
-    position:absolute;
-    left:50%;
+    display: table;
+    margin: 0 auto;
 }
 
 #content_box #wrapContent {

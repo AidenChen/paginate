@@ -5,19 +5,29 @@
 # Usage
 
 ```JavaScript
-    var instance = new Paginate({
-        pageIndex: 1,
-        pageSize: 4,
-        pagerLength: 5,
-        container: 'areaContent',
-        goToContainer: 'goToContent',
-        callback: query
-    });
+// Get an instance
+var paginate = new Paginate({
+    pageIndex: 1,
+    pageSize: 4,
+    pagerLength: 5,
+    container: 'areaContent',
+    goToContainer: 'goToContent',
+    queryEvent: 'query'
+});
 
-    function query(index, size) {
-        // Get your data
-        ...
-        // Update total
-        instance.setTotal(data.num);
-    }
+// Add an event listener
+document.getElementById('areaContent').addEventListener('query', function(e) {
+    query(e.detail.index, e.detail.size);
+});
+
+// Get the data fo first page
+query(1, 4);
+
+// The query function
+function query(index, size) {
+    // Get your data
+    var data = ...
+    // Update total
+    paginate.setTotal(data.total);
+}
 ```

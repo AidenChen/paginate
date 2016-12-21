@@ -6,28 +6,34 @@ function Paginate(config) {
     this.pagerLength = config.pagerLength || 5;
     this.container = config.container;
     this.goToContainer = config.goToContainer;
-    this.callback = config.callback;
+    this.queryEvent = config.queryEvent || 'query';
     this.list = [];
-    this.getData = function(now, lmt, callback) {
-        this.pageIndex = parseInt(now);
-        callback((parseInt(now) - 1) * lmt, lmt);
-    };
-
-    if (this.goToContainer) {
-        this.createGoTo(this.goToContainer);
-    }
-    this.getData(this.pageIndex, this.pageSize, this.callback);
-    var me = this;
-    document.getElementById(config.container).addEventListener("click", function(e) {
-        if (e.target && e.target.nodeName == "A") {
-            me.pageIndex = e.target.attributes.data && e.target.attributes.data.value;
-            me.getData(me.pageIndex, me.pageSize, me.callback);
-        }
-    });
+    this.init();
 }
 
 Paginate.prototype = {
     constructor: Paginate,
+    init: function() {
+        if (this.goToContainer) {
+            this.createGoTo(this.goToContainer);
+        }
+        var me = this;
+        document.getElementById(me.container).addEventListener('click', function(e) {
+            if (e.target && e.target.nodeName == 'A') {
+                var val = e.target.attributes.data && e.target.attributes.data.value;
+                me.pageIndex = parseInt(val);
+                var event = new CustomEvent(me.queryEvent, {
+                    detail: {
+                        index: me.pageIndex,
+                        size: me.pageSize
+                    },
+                    bubbles: true,
+                    cancelable: false
+                });
+                document.getElementById(me.container).dispatchEvent(event);
+            }
+        });
+    },
     getList: function(total) {
         this.itemTotal = parseInt(total);
         this.pageTotal = Math.ceil(this.itemTotal / this.pageSize);
@@ -103,9 +109,9 @@ Paginate.prototype = {
         return ret;
     },
     createGoTo: function() {
-        var ret = "";
-        ret += "<input class='inputGoTo' type='text'>";
-        ret += "<div class='btnGoTo'>Go</div>";
+        var ret = '';
+        ret += '<input class="inputGoTo" type="text">';
+        ret += '<div class="btnGoTo">Go</div>';
         document.getElementById(this.goToContainer).innerHTML = ret;
     }
 };
